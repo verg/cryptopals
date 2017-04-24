@@ -1,4 +1,4 @@
-package cyrptopals
+package main
 
 import (
 	"encoding/hex"
