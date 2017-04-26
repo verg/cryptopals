@@ -1,15 +1,6 @@
-package main
+package single_byte_xor
 
-import (
-	"encoding/hex"
-	"fmt"
-)
-
-func main() {
-	input := "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
-	res := SingleByteXorCipher(input)
-	fmt.Println(res)
-}
+import "encoding/hex"
 
 func SingleByteXorCipher(hexString string) string {
 	var maxString []byte
@@ -17,8 +8,8 @@ func SingleByteXorCipher(hexString string) string {
 
 	h, _ := hex.DecodeString(hexString)
 	for i := 0; i < 256; i++ {
-		decoded := xorWithByte(h, byte(i))
-		score := score(decoded)
+		decoded := XorWithByte(h, byte(i))
+		score := EnglishScore(decoded)
 		if score > maxScore {
 			maxString = decoded
 			maxScore = score
@@ -27,7 +18,7 @@ func SingleByteXorCipher(hexString string) string {
 	return string(maxString)
 }
 
-func xorWithByte(encoded []byte, b byte) (res []byte) {
+func XorWithByte(encoded []byte, b byte) (res []byte) {
 	res = make([]byte, len(encoded))
 	for i, a := range encoded {
 		res[i] = a ^ b
@@ -35,7 +26,7 @@ func xorWithByte(encoded []byte, b byte) (res []byte) {
 	return res
 }
 
-func score(s []byte) (score int) {
+func EnglishScore(s []byte) (score int) {
 	for _, b := range s {
 		if freqMap[b] {
 			score += 1
